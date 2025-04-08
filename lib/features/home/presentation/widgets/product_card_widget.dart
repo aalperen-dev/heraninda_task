@@ -5,9 +5,35 @@ import 'package:heraninda_task/features/home/data/models/product_model.dart';
 
 import '../../../../core/theme/app_colors.dart';
 
+/// [ProductCard], bir ürünün bilgilerini görsel olarak temsil eden kart bileşenidir.
+///
+/// Bu widget, bir ürünün görselini, adını, puanını ve fiyatını gösterir.
+/// Aynı zamanda "favorilere ekle" gibi eylemler için de özelleştirilebilir.
+/// Genellikle ürün listelerinde veya ana sayfa gibi ekranlarda kullanılır.
+///
+/// Kart tasarımı, mavi tonlarda kenarlıklı ve köşeleri yuvarlatılmış bir yapıya sahiptir.
+/// Ürüne tıklanıldığında [onTap] fonksiyonu çağrılır.
+///
+/// Örnek kullanım:
+/// ```dart
+/// ProductCard(
+///   productModel: myProduct,
+///   onTap: () {
+///     // Ürüne tıklandığında yapılacak işlem
+///   },
+/// )
+/// ```
 class ProductCard extends StatelessWidget {
+  /// Kartta gösterilecek ürün verilerini taşıyan model.
   final ProductModel productModel;
+
+  /// Kart tıklanıldığında çağrılacak fonksiyon.
   final Function()? onTap;
+
+  /// [ProductCard] constructor'ı.
+  ///
+  /// [productModel] parametresi zorunludur.
+  /// [onTap] opsiyonel olarak tıklama işlemi için tanımlanabilir.
   const ProductCard({super.key, this.onTap, required this.productModel});
 
   @override
@@ -27,7 +53,7 @@ class ProductCard extends StatelessWidget {
           mainAxisSize: MainAxisSize.min,
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            // product image
+            /// Ürün görseli
             Container(
               height: 120,
               width: double.infinity,
@@ -40,10 +66,12 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
             ),
-            // product name and rating
+
+            /// Ürün ismi ve puanı
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                /// Ürün adı
                 Text(
                   productModel.productName!,
                   style: context.textStyles.labelSmall.copyWith(
@@ -52,6 +80,8 @@ class ProductCard extends StatelessWidget {
                   maxLines: 1,
                   overflow: TextOverflow.fade,
                 ),
+
+                /// Ürün puanı ve yıldız ikonu
                 Row(
                   children: [
                     Icon(Icons.star_rounded, color: AppColors.orange, size: 10),
@@ -66,10 +96,12 @@ class ProductCard extends StatelessWidget {
                 ),
               ],
             ),
-            // product price and add to fav button
+
+            /// Ürün fiyatı ve favorilere ekle butonu
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
+                /// Ürün fiyatı
                 Text(
                   '\$ ${productModel.productPrice.toString()}',
                   style: context.textStyles.titleMedium.copyWith(fontSize: 9),
@@ -77,7 +109,7 @@ class ProductCard extends StatelessWidget {
                   overflow: TextOverflow.fade,
                 ),
 
-                //
+                /// Favorilere ekle butonu (şimdilik işlevsiz)
                 GestureDetector(
                   onTap: () {
                     // TODO: add product to favs function

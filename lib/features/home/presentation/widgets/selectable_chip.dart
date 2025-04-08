@@ -5,6 +5,19 @@ import 'package:flutter/material.dart';
 import 'package:heraninda_task/core/extensions/l10n_extention.dart';
 import 'package:heraninda_task/core/theme/app_colors.dart';
 
+/// [SelectableChipList] yatay olarak kayan ve seçilebilir chip’lerden oluşan özel bir liste bileşenidir.
+///
+/// Kullanıcılar listeden bir chip'e tıklayarak seçim yapabilir.
+/// Seçilen chip, farklı bir arka plan rengi ile vurgulanır.
+/// Her chip’e karşılık gelen bir aksiyon tanımlıdır ve tıklanıldığında çalıştırılır.
+///
+/// Chip isimleri lokalizasyon desteklidir. `context.translate` uzantısı ile alınır.
+/// Bu widget genellikle filtreleme, kategori seçimi gibi işlemler için uygundur.
+///
+/// Örnek kullanım:
+/// ```dart
+/// SelectableChipList()
+/// ```
 class SelectableChipList extends StatefulWidget {
   const SelectableChipList({super.key});
 
@@ -13,10 +26,12 @@ class SelectableChipList extends StatefulWidget {
 }
 
 class _SelectableChipListState extends State<SelectableChipList> {
+  /// Seçili chip'in index'ini tutar.
   int _selectedIndex = 0;
 
   @override
   Widget build(BuildContext context) {
+    /// Chip’lerde gösterilecek yazıların listesi. Lokalize edilmiş string'ler kullanılır.
     final List<String> chips = [
       context.translate.popular,
       context.translate.chair,
@@ -32,6 +47,7 @@ class _SelectableChipListState extends State<SelectableChipList> {
       context.translate.clothes,
     ];
 
+    /// Her chip’e karşılık gelen aksiyonlar.
     final List<VoidCallback> chipActions = [
       () => log("1"),
       () => log("2"),
@@ -54,7 +70,8 @@ class _SelectableChipListState extends State<SelectableChipList> {
         scrollDirection: Axis.horizontal,
         itemCount: chips.length,
         itemBuilder: (context, index) {
-          bool isSelected = _selectedIndex == index;
+          final bool isSelected = _selectedIndex == index;
+
           return GestureDetector(
             onTap: () {
               setState(() {

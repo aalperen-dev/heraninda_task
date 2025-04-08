@@ -3,6 +3,35 @@ import 'package:flutter/material.dart';
 
 import '../../../../core/theme/app_colors.dart';
 
+/// [CustomTextFormField] özelleştirilebilir bir metin girişi bileşenidir.
+///
+/// Bu bileşen, uygulamanın farklı yerlerinde kullanabileceğin sade ama işlevsel bir
+/// text form alanı sunar. Özellikle şifre girişlerinde görünürlüğü değiştirme,
+/// ikonla destekleme ve gerçek zamanlı validasyon gibi işlevler içerir.
+///
+/// ## Özellikler:
+/// - [hintText]: Placeholder olarak gösterilecek metin.
+/// - [controller]: TextField kontrolünü sağlayan controller.
+/// - [prefixIconPath]: Başta gösterilecek ikonun asset yolu.
+/// - [keyboardType]: Klavye tipi (örn. email, number, text).
+/// - [height]: İsteğe bağlı olarak alan yüksekliği.
+/// - [isObscure]: true ise şifre alanı gibi davranır, göz ikonuyla gösterim değiştirilebilir.
+/// - [onChanged]: Kullanıcı her değer değiştirdiğinde tetiklenen callback.
+/// - [validator]: Hata mesajını döndüren validasyon fonksiyonu.
+///
+/// ## Örnek Kullanım:
+/// ```dart
+/// CustomTextFormField(
+///   hintText: 'E-posta adresi',
+///   controller: emailController,
+///   prefixIconPath: context.assets.icons.mail_png,
+///   keyboardType: TextInputType.emailAddress,
+///   validator: (value) {
+///     if (value == null || value.isEmpty) return 'Zorunlu alan';
+///     return null;
+///   },
+/// ),
+/// ```
 class CustomTextFormField extends StatefulWidget {
   final String hintText;
   final TextEditingController controller;
@@ -30,7 +59,10 @@ class CustomTextFormField extends StatefulWidget {
 }
 
 class _CustomTextFormFieldState extends State<CustomTextFormField> {
+  /// Şifre alanı ise, gizli gösterimin açık/kapalı durumu
   bool showPassword = false;
+
+  /// Gerçek zamanlı olarak validasyon sonucundaki hata metni
   String? errorText;
 
   @override
@@ -61,7 +93,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               setState(() {
                 errorText = validation;
               });
-              return null;
+              return null; // Hata metni ayrı olarak altta gösteriliyor
             },
             decoration: InputDecoration(
               border: InputBorder.none,
