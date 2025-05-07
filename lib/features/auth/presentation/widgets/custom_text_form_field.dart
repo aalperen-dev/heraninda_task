@@ -75,6 +75,10 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
           decoration: BoxDecoration(
             color: AppColors.lightGrey,
             borderRadius: BorderRadius.circular(15),
+            border: Border.all(
+              color: errorText != null ? Colors.red : Colors.transparent,
+              width: 1.5,
+            ),
           ),
           alignment: Alignment.center,
           child: TextFormField(
@@ -93,7 +97,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
               setState(() {
                 errorText = validation;
               });
-              return null; // Hata metni ayrı olarak altta gösteriliyor
+              return null;
             },
             decoration: InputDecoration(
               border: InputBorder.none,
@@ -138,6 +142,7 @@ class _CustomTextFormFieldState extends State<CustomTextFormField> {
             ),
           ),
         ),
+
         const SizedBox(height: 2),
         AnimatedOpacity(
           opacity: errorText == null ? 0 : 1,
